@@ -21,10 +21,13 @@ spec:
         - name: http-port
           containerPort: 15672       # منفذ واجهة الإدارة
         env: 
-         - name: RABBITMQ_DEFAULT_PASS
-           valueFrom:
-             secretKeyRef:
-               name: app-secret
-               key: rmq-pass
+#        - name: RABBITMQ_DEFAULT_PASS
+#          valueFrom:
+#            secretKeyRef:
+#              name: app-secret
+#              key: rmq-pass
          - name: RABBITMQ_DEFAULT_USER
-           value: "guest"
+           value: "test"
+
+         - name: RABBITMQ_DEFAULT_PASS
+           value: "test"
