@@ -4,9 +4,12 @@ metadata:
   name: vpromq01
 spec:
   ports:
-  - port: 5672
-    targetPort: vpromq01-port
-    protocol: TCP
+  - name: rmqp
+    port: 5672
+    targetPort: rmqp-port    # توجيه صحيح لمنفذ البيانات
+  - name: management
+    port: 15672
+    targetPort: http-port    # توجيه صحيح لمنفذ الإدارة
   selector:
     app: vpromq01
   type: ClusterIP

@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vpromq01
-  labels:
-    app: vpromq01
 spec:
   selector:
     matchLabels:
@@ -16,10 +14,12 @@ spec:
     spec:
       containers:
       - name: vpromq01
-        image: rabbitmq
+        image: rabbitmq:3-management  # مهم جداً: استخدم نسخة management لتفعيل الواجهة
         ports:
-        - name: vpromq01-port
-          containerPort: 15672
+        - name: rmqp-port
+          containerPort: 5672        # منفذ البيانات الأساسي
+        - name: http-port
+          containerPort: 15672       # منفذ واجهة الإدارة
         env: 
          - name: RABBITMQ_DEFAULT_PASS
            valueFrom:
@@ -28,4 +28,3 @@ spec:
                key: rmq-pass
          - name: RABBITMQ_DEFAULT_USER
            value: "guest"
-
