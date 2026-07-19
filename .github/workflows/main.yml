@@ -4,6 +4,7 @@ env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: vprofileapp
   EKS_CLUSTER: vprofile-eks
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 jobs:
   Testing:
@@ -32,7 +33,6 @@ jobs:
       - name: SonarQube Scan
         run: sonar-scanner
           -Dsonar.host.url=${{ secrets.SONAR_URL }}
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
           -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
           -Dsonar.sources=src/
