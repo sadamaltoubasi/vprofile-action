@@ -97,15 +97,17 @@ jobs:
       - name: Print config file
         run: cat ~/.kube/config
 
-      - name: Install Ingress Controller via Helm
+      - name: Install Ingress Controller via Helm (NLB)
         run: |
           helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
           helm repo update
 
-          # 2. تثبيت أو تحديث الـ Controller وتفعيل خاصية الانتظار --wait
           helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
             --namespace ingress-nginx \
             --create-namespace \
+            --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-type"="external" \
+            --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-nlb-target-type"="instance" \
+            --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-scheme"="internet-facing" \
             --wait \
             --timeout 5m
             
