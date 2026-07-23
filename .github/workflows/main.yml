@@ -97,9 +97,18 @@ jobs:
       - name: Print config file
         run: cat ~/.kube/config
 
-      - name: Install Ingress controller
-        run: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.3/deploy/static/provider/aws/deploy.yaml
+      - name: Install Ingress Controller via Helm
+        run: |
+          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+          helm repo update
 
+          # 2. تثبيت أو تحديث الـ Controller وتفعيل خاصية الانتظار --wait
+          helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
+            --namespace ingress-nginx \
+            --create-namespace \
+            --wait \
+            --timeout 5m
+            
       - name: Login to ECR and Create Secret
         run: |
           kubectl create secret docker-registry regcred \
