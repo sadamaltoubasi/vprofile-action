@@ -105,8 +105,7 @@ jobs:
           helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
             --namespace ingress-nginx \
             --create-namespace \
-            --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-type"="external" \
-            --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-nlb-target-type"="instance" \
+            --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-type"="nlb" \
             --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-scheme"="internet-facing" \
             --wait \
             --timeout 5m
