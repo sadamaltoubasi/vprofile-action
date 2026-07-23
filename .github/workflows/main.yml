@@ -27,14 +27,14 @@ jobs:
           java-version: '21'
 
       - name: setup SonarQube
-        uses: warchant/setup-sonar-scanner@v7
+        uses: SonarSource/sonarqube-scan-action@v3
 
 # Run sonar-scanner
       - name: SonarQube Scan
         env:
-          JAVA_HOME: ${{ env.JAVA_HOME_21_X64 }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
         run: sonar-scanner
-          -Dsonar.host.url=${{ secrets.SONAR_URL }}
           -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
           -Dsonar.sources=src/
